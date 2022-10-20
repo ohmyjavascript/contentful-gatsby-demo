@@ -12,6 +12,8 @@ const ContentfulPage = (props) => {
   );
 };
 
+// This is a page query. SO it an can be exported.
+
 export const query = graphql`
   query PageQuery($id: String) {
     contentfulPage(id: { eq: $id }) {
