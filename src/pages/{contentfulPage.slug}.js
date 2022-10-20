@@ -23,6 +23,11 @@ export const query = graphql`
       pageContent {
         raw
         references {
+          ... on ContentfulAsset {
+            contentful_id
+            title
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
+          }
           ... on ContentfulHero {
             __typename
             contentful_id
@@ -30,6 +35,19 @@ export const query = graphql`
             subHeading
             backgroundImage {
               gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
+            }
+          }
+          ... on ContentfulPriceGroup {
+            __typename
+            contentful_id
+            priceOptions {
+              id
+              title
+              amountPerMonth
+              description {
+                raw
+              }
+              mostPopular
             }
           }
         }

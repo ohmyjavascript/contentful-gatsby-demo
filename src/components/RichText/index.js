@@ -1,7 +1,7 @@
 import React from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS } from '@contentful/rich-text-types';
-import { Hero } from 'components';
+import { Hero, PriceGroup } from 'components';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import { Wrapper, ImageWrapper } from './style';
 
@@ -32,6 +32,9 @@ export const RichText = ({ raw, references = [] }) => {
                 backgroundImage={data.backgroundImage.gatsbyImageData}
               />
             );
+          case 'ContentfulPriceGroup':
+            return <PriceGroup priceOptions={data.priceOptions} />;
+
           default:
             return null;
         }
