@@ -1,15 +1,13 @@
 import React from 'react';
-import { Layout } from 'components';
+import { Layout, RichText } from 'components';
 import { graphql } from 'gatsby';
-// Pass in JSON to this
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-// by default pageContent is injected into props
+
 const ContentfulPage = (props) => {
-  console.log(props);
+  const { raw, references } = props.data.contentfulPage.pageContent;
   return (
     <Layout>
-      {documentToReactComponents(
-        JSON.parse(props.data.contentfulPage.pageContent.raw)
+      {!!props.data.contentfulPage.pageContent && (
+        <RichText references={references} raw={raw} />
       )}
     </Layout>
   );
@@ -24,6 +22,17 @@ export const query = graphql`
       title
       pageContent {
         raw
+        references {
+          ... on ContentfulHero {
+            __typename
+            contentful_id
+            heading
+            subHeading
+            backgroundImage {
+              gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
+            }
+          }
+        }
       }
     }
   }
