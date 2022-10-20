@@ -1,6 +1,6 @@
-import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
+import Header from './Header';
 
 // Global font added via gatsby-plugin-google-fonts
 const GlobalStyle = createGlobalStyle`
@@ -20,44 +20,11 @@ const GlobalStyle = createGlobalStyle`
 // non page components to fetch data
 
 export const Layout = ({ children }) => {
-  const result = useStaticQuery(graphql`
-    fragment menuItemData on ContentfulMenuItem {
-      id
-      label
-      page {
-        slug
-      }
-    }
-
-    query MenuQuery {
-      contentfulMenu {
-        menuItems {
-          ...menuItemData
-          subMenuItems {
-            ...menuItemData
-          }
-        }
-      }
-    }
-  `);
-
   return (
     <div>
       <GlobalStyle />
-      <div>
-        {result.contentfulMenu.menuItems.map((item) => {
-          return (
-            <div key={item.id}>
-              <div> {item.label} </div>
-              {item.subMenuItems?.map((subItem) => (
-                <div key={subItem.id}>
-                  <div> {subItem.label} </div>
-                </div>
-              ))}
-            </div>
-          );
-        })}
-      </div>
+      <Header />
+
       <section>{children}</section>
     </div>
   );
